@@ -1,4 +1,4 @@
-# NSBM App
+# N-Reach Mobile App
 Team- <br>
 1. T Praveen<br>
 2. M.K Lakshitha
