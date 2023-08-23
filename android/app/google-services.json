@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "458064021210",
+    "project_id": "nreach-b8dee",
+    "storage_bucket": "nreach-b8dee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458064021210:android:1beac97164e62ed0c507e3",
+        "android_client_info": {
+          "package_name": "com.example.n_reach_nsbm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458064021210-asespk5d1geogoj2bn92kqo38mraof5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcc8PHB3VnJrZH0_Mqdckf4mhUbYbCNq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458064021210-asespk5d1geogoj2bn92kqo38mraof5i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "458064021210-cf8k66buvti3b40gga7g9rrfl42gbr6k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.nreach"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
