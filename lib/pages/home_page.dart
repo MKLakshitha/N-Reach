@@ -1,14 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
-import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:sidebarx/sidebarx.dart';
-import 'package:n_reach_nsbm/announcementadd.dart';
-import 'package:n_reach_nsbm/carousel.dart';
+import 'package:n_reach_nsbm/pages/carousel.dart';
 import 'package:n_reach_nsbm/pages/appbar.dart';
 import 'package:n_reach_nsbm/pages/btmnavbar.dart';
 import 'package:n_reach_nsbm/pages/sidebar.dart';
-import 'package:n_reach_nsbm/pages/sos.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
