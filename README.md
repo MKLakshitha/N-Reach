@@ -2,7 +2,7 @@
 Team- <br>
 1. T Praveen
 2. M.K Lakshitha
-3. kAKGU Priyamanthi
+3. AKGU Priyamanthi<br>
 4. WTK Wijegunawardana <br>
 5. RPKH Rajapaksha
 6. MSM Arshad<br>
