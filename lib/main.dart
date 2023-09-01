@@ -44,6 +44,23 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.manropeTextTheme(
           Theme.of(context).textTheme,
         ),
+        //mek add krpn !! lakshu
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green, // Set the default color here
+            ),
+          ),
+          fontFamily: 'DM Sans',
+          appBarTheme: const AppBarTheme(
+              titleSpacing: 1.0,
+              //titleTextStyle: TextStyle(color: Colors.black),
+              backgroundColor: Colors.white,
+              iconTheme: IconThemeData(
+                color:
+                    Colors.black, // Change the color of the leading icon here
+              ),
+              elevation: 0),
+        
       ),
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
