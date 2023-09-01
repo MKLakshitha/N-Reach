@@ -33,6 +33,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //meka add krpn
+    mobileDeviceWidth = MediaQuery.of(context).size.width;
+    mobileDeviceHeight = MediaQuery.of(context).size.height;
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'N-Reach',
