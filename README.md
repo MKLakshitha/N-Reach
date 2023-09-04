@@ -11,3 +11,4 @@ Team- <br>
 <br>Payment gateway ongoing</br>
    N - Wallet and N - Map Done
    N-Map and N-Blog finished
+update please
