@@ -3,7 +3,7 @@ Team- <br>
 1. T Praveen
 2. M.K Lakshitha
 3. AKGU Priyamanthi
-4. WTK Wijegunawardana <br>
+4. WTK Wijegunawardana
 5. RPKH Rajapaksha 
 6. MSM Arshad<br>
 <br>Guys First Phase is Almost Done</br>
@@ -11,4 +11,4 @@ Team- <br>
 <br>Payment gateway ongoing</br>
    N - Wallet and N - Map Done
    N-Map and N-Blog finished
-update please
+<br> update please <br>
