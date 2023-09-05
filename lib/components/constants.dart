@@ -7,3 +7,8 @@ double mobileDeviceWidth = 0.0;
 double mobileDeviceHeight = 0.0;
 const Color buttonColor = Color.fromARGB(255, 43, 166, 129);
 const Color bgcolor = Color.fromARGB(255, 110, 237, 199);
+
+//update constants
+const Color grey = Color.fromARGB(255, 109, 109, 109);
+const TextStyle blackText = TextStyle(color: Colors.black);
+const TextStyle greyText = TextStyle(color: grey);
