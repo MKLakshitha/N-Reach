@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:n_reach_nsbm/app_styles.dart';
-import 'package:n_reach_nsbm/main.dart';
 import 'package:n_reach_nsbm/model/onboard_data.dart';
 import 'package:n_reach_nsbm/size_config.dart';
 import 'package:n_reach_nsbm/view/signup_page.dart';
@@ -29,9 +28,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     );
   }
 
-  Future setSeenonboard() async {
+  Future<void> _markOnboardingSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    seenOnboard = await prefs.setBool('seenOnboard', true);
+    await prefs.setBool('seenOnboard', true);
   }
 
   @override
@@ -101,11 +100,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 currentPage == OnBoardingContents.length - 1
                     ? GetStartedBtn(
                         buttonName: 'Get Started',
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SignupPage()));
+                        onPressed: () async {
+                          await _markOnboardingSeen();
+                          Navigator.pushReplacementNamed(context, '/signup');
                         },
                         bgColor: kThemeColor,
                       )

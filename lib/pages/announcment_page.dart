@@ -120,7 +120,3 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
     );
   }
 }
-
-void main() {
-  runApp(const MaterialApp(home: AnnouncementPage()));
-}

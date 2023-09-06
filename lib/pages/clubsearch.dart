@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:N_Reach/clubdata.dart';
-import 'package:N_Reach/constants/constants.dart';
-import 'package:N_Reach/pages/btmnavbar.dart';
-import 'package:N_Reach/pages/clubs.dart';
-import 'package:N_Reach/pages/sidebar.dart';
+import 'package:n_reach_nsbm/pages/sidebar.dart';
+
+import '../components/constants.dart';
+import '../model/clubdata.dart';
+import 'btmnavbar.dart';
+import 'clubs.dart';
 
 class SearchClub extends StatefulWidget {
   const SearchClub({super.key});

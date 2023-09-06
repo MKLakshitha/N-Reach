@@ -8,6 +8,8 @@ import 'package:n_reach_nsbm/view/phone_page.dart';
 import 'package:n_reach_nsbm/view/signup_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../pages/home_page.dart';
+
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
 
@@ -79,7 +81,8 @@ class _SignInPageState extends State<SignInPage> {
   Future<void> delayedNavigation(
       BuildContext context, String routeName, Duration delay) async {
     await Future.delayed(delay);
-    Navigator.pushReplacementNamed(context, '/map');
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const HomePage()));
   }
 
   void _showEmailSnackbar(String message) {
@@ -194,7 +197,10 @@ class _SignInPageState extends State<SignInPage> {
       // Replace the above example with your actual authentication logic
 
       _showSuccessSnackbar('Sign in successful!');
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
     } catch (e) {
       _showErrorSnackbar('Sign in failed: $e');
     }

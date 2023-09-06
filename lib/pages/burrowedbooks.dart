@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:simple_flutter_app/constants/constants.dart';
+
+import '../components/constants.dart';
 
 class BorrowedBooksPage extends StatelessWidget {
   final String studentId = '23926';

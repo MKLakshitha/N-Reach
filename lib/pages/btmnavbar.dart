@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BtmNavBar extends StatelessWidget {
+class BtmNavBar extends StatefulWidget {
   final int currentIndex;
   final Function(int) onItemSelected;
 
@@ -11,8 +11,12 @@ class BtmNavBar extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<BtmNavBar> createState() => _BtmNavBarState();
+}
+
+class _BtmNavBarState extends State<BtmNavBar> {
+  @override
   Widget build(BuildContext context) {
-    //print('BtmNavBar rebuild with index: $currentIndex');
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       items: <BottomNavigationBarItem>[
@@ -42,7 +46,7 @@ class BtmNavBar extends StatelessWidget {
         ),
       ],
       iconSize: 28,
-      currentIndex: currentIndex,
+      currentIndex: widget.currentIndex,
       selectedItemColor: Colors.black,
       selectedIconTheme: const IconThemeData(
         color: Colors.blue,
@@ -50,6 +54,21 @@ class BtmNavBar extends StatelessWidget {
       unselectedItemColor: const Color.fromARGB(255, 146, 146, 146),
       showUnselectedLabels: false,
       showSelectedLabels: false,
+      onTap: (int index) {
+        // Navigate to the desired page
+        if (index == 0) {
+          Navigator.pushNamed(context, '/sos');
+        } else if (index == 1) {
+          Navigator.pushNamed(context, '/map');
+        } else if (index == 2) {
+          Navigator.pushNamed(context, '/home');
+        } else if (index == 3) {
+          Navigator.pushNamed(context, '/payment');
+        } else if (index == 4) {
+          Navigator.pushNamed(context, '/profile');
+        }
+        widget.onItemSelected(index);
+      },
     );
   }
 }

@@ -47,8 +47,11 @@ class _SignupPageState extends State<SignupPage> {
             'offered_by': '',
             'personal_email': '',
             'phone_number': '',
-            'photo_url': '',
+            'photo_url':
+                'https://firebasestorage.googleapis.com/v0/b/nreach-b8dee.appspot.com/o/images%2Fdefault-user.png?alt=media&token=5f3c17ce-78e4-403d-b2c3-d92829876316',
             'uid': user.uid,
+            'github_link': '',
+            'linkedin_link': '',
           });
 
           _showSuccessSnackbar();

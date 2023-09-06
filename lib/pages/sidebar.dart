@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:n_reach_nsbm/pages/add_paymentcard_page.dart';
+import 'package:n_reach_nsbm/pages/nroad_page.dart';
+import 'package:n_reach_nsbm/pages/transportation.dart';
+import 'package:n_reach_nsbm/pages/wallet_page.dart';
 import 'package:sidebarx/sidebarx.dart';
-import 'package:n_reach_nsbm/home_page.dart';
-import 'package:n_reach_nsbm/medical.dart';
-import 'package:n_reach_nsbm/pages/sos.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'clubsearch.dart';
+import 'group_enrollment.dart';
+import 'home_page.dart';
+import 'library.dart';
+import 'medicalPage.dart';
+import 'news_page.dart';
+import 'sos.dart';
+import 'time_table.dart';
 
 class ExampleSidebarX extends StatelessWidget {
   const ExampleSidebarX({
@@ -12,6 +23,26 @@ class ExampleSidebarX extends StatelessWidget {
         super(key: key);
 
   final SidebarXController _controller;
+
+  _launchURLCalendar() async {
+    const url =
+        'https://calendar.google.com/calendar/u/0?cid=MTVhNmEzNzY5NjNjNWMwM2FhMzdjZDk5Yzg2YzFlZDJhYmVmYjg3N2M3ODNmZGYzNjEwNjc1MmU3N2YzOWRmZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchURLTimeTable() async {
+    const url =
+        'https://nsbm365-my.sharepoint.com/:x:/g/personal/mklakshitha_students_nsbm_ac_lk/EfBnmSSw4CJPnOLpHBcTN4wBp-2BHVg2U2GJP3ayWhyOCA?e=iiqeqW';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,29 +131,55 @@ class ExampleSidebarX extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const Sos()),
+              MaterialPageRoute(builder: (context) => const SOS()),
             );
           },
         ),
-        const SidebarXItem(
+        SidebarXItem(
           icon: Icons.location_on,
           label: 'N-Map',
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const MapPage()),
+            );
+          },
         ),
-        const SidebarXItem(
+        SidebarXItem(
           icon: Icons.shopping_bag_rounded,
           label: 'NSBM Shop',
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const MapPage()),
+            );
+          },
         ),
-        const SidebarXItem(
+        SidebarXItem(
           icon: Icons.qr_code_2,
           label: 'QR Scanner',
+          onTap: () {},
         ),
-        const SidebarXItem(
+        SidebarXItem(
           icon: Icons.wallet,
           label: 'N-Wallet',
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const AddPaymentCardScreen()),
+            );
+          },
         ),
-        const SidebarXItem(
+        SidebarXItem(
           icon: Icons.payments_outlined,
           label: 'Payments',
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const WalletPage()),
+            );
+          },
         ),
         SidebarXItem(
             icon: Icons.medical_services_outlined,
@@ -133,17 +190,35 @@ class ExampleSidebarX extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const Medical()),
               );
             }),
-        const SidebarXItem(
+        SidebarXItem(
           icon: Icons.people_sharp,
           label: 'Clubs',
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const SearchClub()),
+            );
+          },
         ),
-        const SidebarXItem(
+        SidebarXItem(
           icon: Icons.table_view,
           label: 'Semester Timetable',
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const TimetablePage()),
+            );
+          },
         ),
-        const SidebarXItem(
+        SidebarXItem(
           icon: Icons.local_library,
           label: 'Library',
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Library()),
+            );
+          },
         ),
         const SidebarXItem(
           icon: Icons.menu_book,
@@ -157,25 +232,55 @@ class ExampleSidebarX extends StatelessWidget {
           icon: Icons.assignment,
           label: 'Examinations',
         ),
-        const SidebarXItem(
+        SidebarXItem(
           icon: Icons.directions_bus_rounded,
           label: 'Transportation',
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Transportation()),
+            );
+          },
         ),
         const SidebarXItem(
           icon: Icons.food_bank,
           label: 'Food and canteen',
         ),
-        const SidebarXItem(
-          icon: Icons.event_available,
-          label: 'Events and Calender',
-        ),
-        const SidebarXItem(
+        SidebarXItem(
+            icon: Icons.event_available,
+            label: 'Events and Calender',
+            onTap: () {
+              _launchURLCalendar();
+            }),
+        SidebarXItem(
           icon: Icons.group_add_outlined,
           label: 'Batch Group',
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const BatchGroup()),
+            );
+          },
         ),
-        const SidebarXItem(
+        SidebarXItem(
+          icon: Icons.newspaper_outlined,
+          label: 'Latest News',
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const NewsFeed()),
+            );
+          },
+        ),
+        SidebarXItem(
           icon: Icons.book,
           label: 'Magazine',
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const NewsFeed()),
+            );
+          },
         ),
         const SidebarXItem(
           icon: Icons.contact_support,
@@ -184,10 +289,6 @@ class ExampleSidebarX extends StatelessWidget {
         const SidebarXItem(
           icon: Icons.support_agent,
           label: 'Complaints',
-        ),
-        const SidebarXItem(
-          iconWidget: FlutterLogo(size: 20),
-          label: 'Flutter',
         ),
       ],
     );

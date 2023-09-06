@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'sidebar.dart';
 
 import '../components/constants.dart';
+import 'btmnavbar.dart';
+import 'sidebar.dart';
 
 class Transportation extends StatelessWidget {
   const Transportation({super.key});
@@ -232,6 +233,14 @@ class Transportation extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: BtmNavBar(
+        currentIndex: 2,
+        onItemSelected: _onItemTapped,
+      ),
     );
+  }
+
+  void _onItemTapped(int index) {
+    // TODO: Handle bottom navigation bar item tap
   }
 }

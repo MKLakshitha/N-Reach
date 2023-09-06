@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,9 +15,25 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 3)).then((value) {
-      Navigator.pushReplacementNamed(context, ('/onboarding'));
-    });
+    checkOnboardingStatus();
+  }
+
+  Future<void> checkOnboardingStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool seenOnboard = prefs.getBool('seenOnboard') ?? false;
+    if (seenOnboard == true) {
+      Future.delayed(const Duration(seconds: 3)).then((value) {
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/signin');
+        }
+      });
+    } else {
+      Future.delayed(const Duration(seconds: 3)).then((value) {
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/onboarding');
+        }
+      });
+    }
   }
 
   @override

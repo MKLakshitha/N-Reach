@@ -34,23 +34,57 @@ dependencies:
   page_transition: ^2.0.9
   firebase_auth: ^4.7.2
   firebase_core: any
-  aad_oauth: ^0.4.4
+  aad_oauth: any
   fluttertoast: any
-  http: any
+  flutter_typeahead: any
   google_maps_flutter: any
   location: any
   flutter_polyline_points: any
+  syncfusion_flutter_xlsio: any
+  excel: any
+  intl: any
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   device_preview: ^1.1.0
   google_fonts: any
+  font_awesome_flutter: any
+  sidebarx: any
+  chat_bubbles: any
+  webview_flutter: any
+  flutter_image_slideshow: any
+  popup_card: any
+  carousel_slider: any
+  cached_network_image: any
   shared_preferences: any
   flutter_web_auth: any
+  permission_handler: any
   url_launcher: any
   cloud_firestore: ^4.8.4
   google_maps_webservice: any
   flutter_svg: ^2.0.7
+  firebase_storage: ^11.2.6
+  image_picker: ^1.0.2
+  flutter_octicons: any
+  qr_bar_code_scanner_dialog: ^0.0.5
+  ionicons: ^0.2.2
+  googleapis: any
+  googleapis_auth: any
+  httpservice:  any
+  flutter_credit_card: ^3.0.7
+  get: ^4.6.5
+  flutter_stripe: ^9.3.0
+  http: any
+  pdf: any
+  flutter_pdfview: any
+  open_document: ^1.0.4
+  syncfusion_flutter_pdf: any
+  universal_html: any
+  open_file: any
+  geocoding: any
+  qr_flutter: any
+  geolocator: any
+  filter_list: any
 
 dev_dependencies:
   flutter_test:
@@ -63,7 +97,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_appauth: any
- 
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -79,6 +113,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
       - assets/
+      - assets/fonts/DMSans_18pt-Bold.ttf
+      - assets/fonts/DMSans_18pt-Regular.ttf
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -95,9 +131,9 @@ flutter:
   # example:
 fonts:
   - family: DMSans
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+
+  - assets: assets/fonts/DMSans_18pt-Bold.ttf
+  - assets: assets/fonts/DMSans_18pt-Regular.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

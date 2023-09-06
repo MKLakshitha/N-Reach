@@ -3,13 +3,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:popup_card/src/hero_route.dart';
-import 'package:N_Reach/carousel.dart';
-import 'package:N_Reach/constants/constants.dart';
-import 'package:N_Reach/pages/btmnavbar.dart';
-import 'package:N_Reach/pages/not_found.dart';
-import 'package:N_Reach/pages/sidebar.dart';
 
-import '../clubdata.dart';
+import '../components/constants.dart';
+import '../model/clubdata.dart';
+import 'btmnavbar.dart';
+import 'carousel.dart';
+import 'sidebar.dart';
 
 class Clubs extends StatelessWidget {
   final String clubName;
@@ -182,7 +181,7 @@ class Clubs extends StatelessWidget {
                   BtmNavBar(currentIndex: 2, onItemSelected: onItemSelected),
             );
           }
-          return const Notfound();
+          return Notfound();
         });
   }
 
@@ -227,6 +226,20 @@ class ImageScroll extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class Notfound extends StatelessWidget {
+  const Notfound({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text(
+        'Data not found.',
+        style: TextStyle(fontSize: 16),
       ),
     );
   }

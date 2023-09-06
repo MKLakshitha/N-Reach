@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:n_reach_nsbm/pages/btmnavbar.dart';
 import 'package:n_reach_nsbm/pages/sidebar.dart';
 
-class Sos extends StatelessWidget {
-  const Sos({Key? key}) : super(key: key);
+class SOS extends StatelessWidget {
+  const SOS({Key? key}) : super(key: key);
 
   void _onItemTapped(int index) {}
 
@@ -23,80 +23,82 @@ class Sos extends StatelessWidget {
             color: Colors.black, // Change the color of the leading icon here
           ),
           elevation: 0),
-      body: Container(
-        padding: EdgeInsets.all(width * 0.03),
-        child: Column(
-          children: [
-            const Text(
-              'Alert our security members and get assistance immediately, if not responded within 5 minutes, use the call button to get in contact with our security.',
-              style: TextStyle(
-                  fontSize: 8, color: Color.fromARGB(255, 144, 144, 144)),
-            ),
-            SizedBox(height: width * 0.027),
-            Row(
-              children: [
-                sosCards(
-                  width * 0.45,
-                  width * 0.27,
-                  'assets/sos1.png',
-                  'Medical Emergency',
-                ),
-                SizedBox(width: width * 0.027),
-                sosCards(
-                  width * 0.45,
-                  width * 0.27,
-                  'assets/sos2.png',
-                  'Fire and Hazards',
-                ),
-              ],
-            ),
-            SizedBox(height: width * 0.027),
-            Row(
-              children: [
-                sosCards(
-                  width * 0.45,
-                  width * 0.27,
-                  'assets/sos3.png',
-                  'Security Breaches and Thefts',
-                ),
-                SizedBox(width: width * 0.027),
-                sosCards(
-                  width * 0.45,
-                  width * 0.27,
-                  'assets/sos4.png',
-                  'Natural Disasters',
-                ),
-              ],
-            ),
-            SizedBox(height: width * 0.027),
-            Row(
-              children: [
-                sosCards(
-                  width * 0.45,
-                  width * 0.27,
-                  'assets/sos5.png',
-                  'Mental Health Crisis',
-                ),
-                SizedBox(width: width * 0.027),
-                sosCards(
-                  width * 0.45,
-                  width * 0.27,
-                  'assets/sos6.png',
-                  'Personal safety',
-                ),
-              ],
-            ),
-            SizedBox(height: width * 0.027),
-            sosCards2(
-                width * 1,
-                width * 0.21,
-                'assets/sos7.png',
-                'Personal Escort',
-                'Request security assistance to walk out when its too late or dark'),
-            SizedBox(height: width * 0.027),
-            sosCards2(width * 1, width * 0.21, 'assets/sos8.png',
-                'Emergency Call', 'Call for security support via app '),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(width * 0.03),
+          child: Column(
+            children: [
+              const Text(
+                'Alert our security members and get assistance immediately, if not responded within 5 minutes, use the call button to get in contact with our security.',
+                style: TextStyle(
+                    fontSize: 8, color: Color.fromARGB(255, 144, 144, 144)),
+              ),
+              SizedBox(height: width * 0.027),
+              Row(
+                children: [
+                  sosCards(
+                    width * 0.45,
+                    width * 0.27,
+                    'assets/sos1.png',
+                    'Medical Emergency',
+                  ),
+                  SizedBox(width: width * 0.027),
+                  sosCards(
+                    width * 0.45,
+                    width * 0.27,
+                    'assets/sos2.png',
+                    'Fire and Hazards',
+                  ),
+                ],
+              ),
+              SizedBox(height: width * 0.027),
+              Row(
+                children: [
+                  sosCards(
+                    width * 0.45,
+                    width * 0.27,
+                    'assets/sos3.png',
+                    'Security Breaches and Thefts',
+                  ),
+                  SizedBox(width: width * 0.027),
+                  sosCards(
+                    width * 0.45,
+                    width * 0.27,
+                    'assets/sos4.png',
+                    'Natural Disasters',
+                  ),
+                ],
+              ),
+              SizedBox(height: width * 0.027),
+              Row(
+                children: [
+                  sosCards(
+                    width * 0.45,
+                    width * 0.27,
+                    'assets/sos5.png',
+                    'Mental Health Crisis',
+                  ),
+                  SizedBox(width: width * 0.027),
+                  sosCards(
+                    width * 0.45,
+                    width * 0.27,
+                    'assets/sos6.png',
+                    'Personal safety',
+                  ),
+                ],
+              ),
+              SizedBox(height: width * 0.027),
+              sosCards2(
+                  width * 1,
+                  width * 0.21,
+                  'assets/sos7.png',
+                  'Personal Escort',
+                  'Request security assistance to walk out when its too late or dark'),
+              SizedBox(height: width * 0.027),
+              sosCards2(width * 1, width * 0.21, 'assets/sos8.png',
+                  'Emergency Call', 'Call for security support via app '),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BtmNavBar(
