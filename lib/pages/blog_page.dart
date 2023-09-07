@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import '../constants/constants.dart';
+
 class BlogPage extends StatefulWidget {
   const BlogPage({Key? key}) : super(key: key);
 
@@ -106,17 +108,17 @@ class _BlogPageState extends State<BlogPage> {
         title: const Row(
           children: <Widget>[
             Text(
-              'Blogged By ',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            Text(
-              'NReach',
+              'the',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.grey,
+              ),
+            ),
+            Text(
+              'Blogged ',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
           ],
@@ -142,6 +144,7 @@ class _BlogPageState extends State<BlogPage> {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
+                    fontSize: 12,
                   ),
                 ),
               ),
@@ -149,89 +152,101 @@ class _BlogPageState extends State<BlogPage> {
           )
         ],
       ),
-      body: Column(
-        children: <Widget>[
-          const SizedBox(
-            child: Divider(
-              height: 10,
-              color: Colors.black,
-            ),
+      body: Stack(children: [
+        Positioned(
+          top: mobileDeviceWidth * 0.04,
+          bottom: 0,
+          left: mobileDeviceWidth * 0.85,
+          child: Container(
+            width: 1, // Adjust the height of the line as needed
+            color: const Color.fromARGB(
+                255, 74, 74, 74), // Adjust the color as needed
           ),
-          Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: firestore
-                  .collection('tweets')
-                  .orderBy('timestamp', descending: true)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                final tweets = snapshot.data!.docs;
-
-                return ListView.builder(
-                  itemCount: tweets.length,
-                  itemBuilder: (context, index) {
-                    final tweet = tweets[index];
-                    final tweetText = tweet['text'];
-                    final tweetAuthor = tweet['author'];
-                    final tweetId = tweet.id;
-
-                    return TweetWidget(
-                      tweetText: tweetText,
-                      tweetAuthor: tweetAuthor,
-                      tweetId: tweetId,
-                      imageUrl: tweet['image_url'],
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-          Visibility(
-            visible: isTextFieldVisible,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: tweetController,
-                          decoration: const InputDecoration(
-                            labelText: 'What\'s happening?',
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.add),
-                        onPressed: _pickImage,
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.send),
-                        onPressed: () {
-                          sendTweet();
-                        },
-                      ),
-                    ],
-                  ),
-                  if (_imageFile != null) ...[
-                    const SizedBox(height: 10),
-                    Image.file(
-                      _imageFile!,
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ),
-                  ],
-                ],
+        ),
+        Column(
+          children: <Widget>[
+            const SizedBox(
+              child: Divider(
+                height: 10,
+                color: Colors.black,
               ),
             ),
-          ),
-        ],
-      ),
+            Expanded(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: firestore
+                    .collection('tweets')
+                    .orderBy('timestamp', descending: true)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  final tweets = snapshot.data!.docs;
+
+                  return ListView.builder(
+                    itemCount: tweets.length,
+                    itemBuilder: (context, index) {
+                      final tweet = tweets[index];
+                      final tweetText = tweet['text'];
+                      final tweetAuthor = tweet['author'];
+                      final tweetId = tweet.id;
+
+                      return TweetWidget(
+                        tweetText: tweetText,
+                        tweetAuthor: tweetAuthor,
+                        tweetId: tweetId,
+                        imageUrl: tweet['image_url'],
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+            Visibility(
+              visible: isTextFieldVisible,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: tweetController,
+                            decoration: const InputDecoration(
+                              labelText: 'What\'s happening?',
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.add),
+                          onPressed: _pickImage,
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.send),
+                          onPressed: () {
+                            sendTweet();
+                          },
+                        ),
+                      ],
+                    ),
+                    if (_imageFile != null) ...[
+                      const SizedBox(height: 10),
+                      Image.file(
+                        _imageFile!,
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ]),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Container(
@@ -239,11 +254,14 @@ class _BlogPageState extends State<BlogPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const Text(
-                'Start blogging at the students’ centre',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: Text(
+                  "Start blogging at the students' centre",
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: mobileDeviceWidth < 400 ? 12.0 : 14.0),
                 ),
               ),
               Padding(
@@ -258,11 +276,11 @@ class _BlogPageState extends State<BlogPage> {
                       ),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Create',
                     style: TextStyle(
-                      color: Colors.black,
-                    ),
+                        color: Colors.black,
+                        fontSize: mobileDeviceWidth < 400 ? 12.0 : 14.0),
                   ),
                 ),
               ),
@@ -404,109 +422,119 @@ class _TweetWidgetState extends State<TweetWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        border: Border(
-          left: BorderSide(width: 4.0, color: Colors.blue),
-        ),
-      ),
+    return RefreshIndicator(
+      onRefresh: () async {
+        await Future.delayed(const Duration(seconds: 2));
+
+        setState(() {});
+      },
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Text(
-                  '@${widget.tweetAuthor}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  width: 80,
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                      12.0), // Adjust the radius as needed
-                  child: PopupMenuButton<String>(
-                    onSelected: (value) {
-                      if (value == 'report') {
-                        reportTweet();
-                      }
-                    },
-                    itemBuilder: (BuildContext context) =>
-                        <PopupMenuEntry<String>>[
-                      const PopupMenuItem<String>(
-                        value: 'report',
-                        child: Text('Report',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
+        padding: EdgeInsets.only(
+          left: mobileDeviceWidth * 0.05,
+          right: mobileDeviceWidth * 0.01,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: mobileDeviceWidth * 0.78,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        '@${widget.tweetAuthor}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 13),
                       ),
+                      ClipRRect(
+                        child: PopupMenuButton<String>(
+                          padding: const EdgeInsets.all(0),
+                          onSelected: (value) {
+                            if (value == 'report') {
+                              reportTweet();
+                            }
+                          },
+                          itemBuilder: (BuildContext context) =>
+                              <PopupMenuEntry<String>>[
+                            const PopupMenuItem<String>(
+                              value: 'report',
+                              child: Text('Report',
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.w500)),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
-                )
-              ],
-            ),
-            const SizedBox(height: 4.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width - 150,
-                  child: Text(
+                  Text(
                     widget.tweetText,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 14.5,
                     ),
                   ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    isLiked ? Icons.favorite : Icons.favorite_border,
-                    color: isLiked ? Colors.red : null,
+                  SizedBox(
+                    height: mobileDeviceHeight * 0.0098,
                   ),
-                  onPressed: () {
-                    updateLikeStatus();
-                  },
-                ),
-              ],
-            ),
-            if (widget.imageUrl.isNotEmpty) ...[
-              const SizedBox(height: 10),
-              Image.network(
-                widget.imageUrl,
-                width: MediaQuery.of(context).size.width - 150,
-                fit: BoxFit.cover,
-              ),
-            ],
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  DateFormat('yyyy-MM-dd hh:mm:ss a')
-                      .format(DateTime.now().toLocal()),
-                  style: const TextStyle(
-                    color: Colors.grey,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text('$likeCount Likes'),
+                  if (widget.imageUrl.isNotEmpty) ...[
+                    Image.network(
+                      widget.imageUrl,
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(
+                      height: mobileDeviceHeight * 0.0098,
+                    ),
                   ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 150,
-              child: const Divider(
-                height: 1,
-                color: Colors.black,
+                  Text(
+                    DateFormat('yyyy-MM-dd hh:mm:ss a')
+                        .format(DateTime.now().toLocal()),
+                    style: const TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  SizedBox(
+                    height: mobileDeviceHeight * 0.0098,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.89,
+                    child: const Divider(
+                      height: 1,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
               ),
             ),
+            likesCounter()
           ],
         ),
       ),
+    );
+  }
+
+  Column likesCounter() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          icon: Icon(
+            isLiked ? Icons.favorite : Icons.favorite_border,
+            color: isLiked ? Colors.red : null,
+          ),
+          padding: const EdgeInsets.all(0),
+          //alignment: Alignment.topCenter,
+          onPressed: () {
+            updateLikeStatus();
+          },
+        ),
+        Text('$likeCount'),
+      ],
     );
   }
 }
