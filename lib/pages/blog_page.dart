@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:simple_flutter_app/pages/home_page.dart';
 
 import '../constants/constants.dart';
 
@@ -105,6 +106,14 @@ class _BlogPageState extends State<BlogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons
+              .arrow_back_ios_new_rounded), // Replace with your desired leading icon
+          onPressed: () {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const HomePage()));
+          },
+        ),
         title: const Row(
           children: <Widget>[
             Text(
