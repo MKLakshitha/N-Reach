@@ -4,11 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
-import 'package:n_reach_nsbm/view/phone_page.dart';
-import 'package:n_reach_nsbm/view/signup_page.dart';
+import 'package:simple_flutter_app/constants/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../pages/home_page.dart';
+import 'pages/home_page.dart';
+import 'phone_page.dart';
+import 'signup_page.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -79,7 +80,7 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   Future<void> delayedNavigation(
-      BuildContext context, String routeName, Duration delay) async {
+      context, String routeName, Duration delay) async {
     await Future.delayed(delay);
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const HomePage()));
@@ -222,73 +223,100 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
+      backgroundColor: const Color.fromARGB(255, 243, 243, 243),
+      body: Stack(children: [
+        Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Flexible(
-              flex: 3,
-              child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/Circle2.png'),
-                    fit: BoxFit.fill,
-                  ),
-                ),
+            Container(
+              height: mobileDeviceWidth * 0.43,
+              width: mobileDeviceWidth,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/circle3.png'), fit: BoxFit.fill),
               ),
             ),
-            const SizedBox(height: 10),
-            Flexible(
-              flex: 2,
-              child: Container(
-                width: 250,
-                height: 170,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/nsbmlogo.png'),
-                    fit: BoxFit.fill,
-                  ),
-                ),
+            const SizedBox(height: 15),
+            Container(
+              height: mobileDeviceWidth * 0.25,
+              decoration: const BoxDecoration(
+                image:
+                    DecorationImage(image: AssetImage('assets/nsbmlogo.png')),
               ),
             ),
-            const SizedBox(height: 20),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+            const SizedBox(height: 30),
+            Container(
+              width: mobileDeviceWidth * 0.87,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5), // Shadow color
+                    spreadRadius: -4, // Spread radius
+                    blurRadius: 8, // Blur radius
+                    offset: const Offset(0, 1), // Offset
+                  ),
+                ],
+              ),
               child: TextFormField(
+                style: const TextStyle(fontSize: 14),
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  prefixIcon: Icon(Icons.email),
-                  border: OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(8),
+                    labelText: 'Enter email',
+                    labelStyle: const TextStyle(fontSize: 14),
+                    prefixIcon: const Icon(Icons.email),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none),
+                    filled: true,
+                    fillColor: Colors.white),
               ),
             ),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+            Container(
+              width: mobileDeviceWidth * 0.87,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5), // Shadow color
+                    spreadRadius: -4, // Spread radius
+                    blurRadius: 8, // Blur radius
+                    offset: const Offset(0, 1), // Offset
+                  ),
+                ],
+              ),
               child: TextFormField(
+                style: const TextStyle(fontSize: 14),
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  prefixIcon: Icon(Icons.lock),
-                  border: OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(
+                    labelText: 'Password',
+                    contentPadding: const EdgeInsets.all(8),
+                    labelStyle: const TextStyle(fontSize: 14),
+                    prefixIcon: const Icon(Icons.lock),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none),
+                    filled: true,
+                    fillColor: Colors.white),
               ),
             ),
             GestureDetector(
               onTap: _forgotPassword,
-              child: const Padding(
-                padding: EdgeInsets.only(left: 200.0, top: 8),
-                child: Text(
+              child: Container(
+                width: mobileDeviceWidth,
+                padding:
+                    EdgeInsets.only(top: 10, right: mobileDeviceWidth * 0.066),
+                child: const Text(
                   'Forgot Password?',
+                  textAlign: TextAlign.right,
                   style: TextStyle(
                       fontSize: 12,
                       fontFamily: 'DM Sans',
                       decoration: TextDecoration.underline,
+                      fontWeight: FontWeight.w600,
                       color: Color.fromARGB(255, 50, 150, 113)),
                 ),
               ),
@@ -296,26 +324,34 @@ class _SignInPageState extends State<SignInPage> {
             const SizedBox(height: 20),
 
             // Sign in button
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _signin,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    backgroundColor: const Color.fromARGB(255, 50, 150, 113),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+            Container(
+              width: mobileDeviceWidth * 0.87,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5), // Shadow color
+                    spreadRadius: -4, // Spread radius
+                    blurRadius: 8, // Blur radius
+                    offset: const Offset(0, 1), // Offset
                   ),
-                  child: const Text('Sign In',
-                      style: TextStyle(fontSize: 16, fontFamily: 'DM Sans')),
+                ],
+              ),
+              child: ElevatedButton(
+                onPressed: _signin,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  backgroundColor: const Color.fromARGB(255, 50, 150, 113),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
+                child: const Text('Sign in',
+                    style:
+                        TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
               ),
             ),
 
-            const SizedBox(height: 5),
+            const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20),
               child: GestureDetector(
@@ -326,57 +362,83 @@ class _SignInPageState extends State<SignInPage> {
                         builder: (context) => PhoneNumberInputScreen()),
                   );
                 },
-                child: const Text('Guest User? Click here',
-                    style: TextStyle(fontSize: 12, fontFamily: 'DM Sans')),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Guest user? ',
+                        style: TextStyle(fontSize: 13, color: grey)),
+                    Text(
+                      'Click here',
+                      style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                          color: grey),
+                    )
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 5),
             const Padding(
               padding: EdgeInsets.only(left: 60.0, right: 60),
               child: Divider(
-                color: Colors.black,
+                color: Color.fromARGB(255, 57, 57, 57),
               ),
             ),
 
-            const Center(child: Text('or', style: TextStyle(fontSize: 18))),
+            const Center(
+                child: Text('or', style: TextStyle(fontSize: 13, color: grey))),
             const SizedBox(height: 10),
+            SizedBox(
+              width: mobileDeviceWidth * 0.87,
+              child: ElevatedButton(
+                onPressed: () async {
+                  try {
+                    final UserCredential userCredential =
+                        await FirebaseAuth.instance.signInWithProvider(
+                            // Replace with the actual MicrosoftAuthProvider() setup if you have one
+                            MicrosoftAuthProvider()
+                            // Example: MicrosoftAuthProvider.scopes(['openid', 'profile', 'email'])
+                            );
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                    onPressed: () async {
-                      _signInWithMicrosoft(context);
-                    }, // Implement the Microsoft login logic
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor: const Color.fromARGB(255, 220, 222, 221),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                    // Successful sign-in
+                    final User? user = userCredential.user;
+                    print('done');
+                    print(user); // User object if sign-in is successful
+                  } catch (error) {
+                    // Handle sign-in error
+                    print('error');
+                    print(error);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  backgroundColor: const Color.fromARGB(255, 223, 223, 223),
+                  shadowColor: const Color.fromARGB(187, 206, 206, 206),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Transform.scale(
+                      scale: 2, // Adjust the scale factor as needed
+                      child: Image.asset(
+                        'assets/microsoft.png',
+                        height: 25, // Original image height
                       ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Transform.scale(
-                          scale: 1.5, // Adjust the scale factor as needed
-                          child: Image.asset(
-                            'assets/microsoft.png',
-                            height: 25, // Original image height
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        const Text(
-                          'Continue with Microsoft',
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontFamily: 'DM Sans',
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ),
-                      ],
-                    )),
+                    const Text(
+                      'Continue with Microsoft',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
 
@@ -390,24 +452,52 @@ class _SignInPageState extends State<SignInPage> {
                     MaterialPageRoute(builder: (context) => const SignupPage()),
                   );
                 },
-                child: const Text('Not have an account? Register',
-                    style: TextStyle(fontSize: 14, fontFamily: 'DM Sans')),
-              ),
-            ),
-            const SizedBox(height: 30),
-            Flexible(
-              flex: 1,
-              child: GestureDetector(
-                onTap: () {
-                  _showEmailSnackbar('Email: nreach@gmail.com');
-                },
-                child: const Text('Having trouble? Contact us',
-                    style: TextStyle(fontSize: 12, fontFamily: 'DM Sans')),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Do not have an account? ',
+                        style: TextStyle(fontSize: 13, color: grey)),
+                    Text(
+                      'Register',
+                      style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                          color: grey),
+                    )
+                  ],
+                ),
               ),
             ),
           ],
         ),
-      ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: GestureDetector(
+              onTap: () {
+                _showEmailSnackbar('Email: nreach@gmail.com');
+              },
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Trouble signing in? ',
+                      style: TextStyle(fontSize: 13, color: grey)),
+                  Text(
+                    'Contact us',
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.underline,
+                        color: Colors.black),
+                  )
+                ],
+              ),
+            ),
+          ),
+        )
+      ]),
     );
   }
 }
