@@ -16,20 +16,15 @@ List<OnBoarding> OnBoardingContents = [
       title: 'Celebrating 7 Years of Excellence',
       image: 'assets/7-Year-Anniversary.png',
       description:
-          'Welcome to our special mobile app commemorating seven years of academic brilliance, innovation, and community spirit at NSBM Green University Sri Lanka.'),
+          'Welcome to our mobile app, commemorating seven years of academic brilliance, innovation, and community spirit at NSBM Green University Sri Lanka.'),
   OnBoarding(
       title: 'Your Gateway to a Vibrant Campus Experience',
       image: 'assets/NSBM.jpeg',
       description:
-          'With this app, we bring the entire NSBM family together on a single platform. Connect, engage, and interact with students, alumni, faculty, and staff who share your passion for knowledge and personal growth.'),
-  OnBoarding(
-      title: 'Empowering Your NSBM Journey',
-      image: 'assets/nsbmlogo.png',
-      description:
-          'Get ready to unlock a world of possibilities tailored just for you!'),
+          'As one family, connect, engage, and interact with students, alumni, faculty, and staff who share your passion for knowledge and personal growth.'),
   OnBoarding(
       title: 'NReach',
-      image: 'assets/nreach.png',
+      image: 'assets/nsbm_nreach.png',
       description:
-          'Say hello to nReach, your ultimate companion for an enriched NSBM experience! This feature-packed app condenses the entire NSBM Green University Sri Lanka ecosystem into one powerful platform. Whether you’re a student, faculty member, or part of the esteemed alumni network, nReach has something special in store for you!')
+          'Say hello to NReach, a feature-packed app condensing the entire NSBM Green University ecosystem into one powerful platform.')
 ];
