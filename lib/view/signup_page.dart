@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:n_reach_nsbm/view/signin_page.dart';
+
+import 'constants/constants.dart';
+import 'signinpage.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -188,92 +190,143 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
+      //backgroundColor: Colors.white,
+      body: Stack(children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            height: mobileDeviceWidth * 0.43,
+            width: mobileDeviceWidth,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/circle3.png'), fit: BoxFit.fill),
+            ),
+          ),
+        ),
+        Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Flexible(
-              flex: 3,
-              child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/circle.png'),
-                    fit: BoxFit.fill,
-                  ),
-                ),
+            SizedBox(height: mobileDeviceHeight * 0.15),
+            Container(
+              height: mobileDeviceWidth * 0.25,
+              decoration: const BoxDecoration(
+                image:
+                    DecorationImage(image: AssetImage('assets/nsbmlogo.png')),
               ),
             ),
-            const SizedBox(height: 40),
-            Flexible(
-              flex: 2,
-              child: Container(
-                width: 250,
-                height: 170,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/nsbmlogo.png'),
-                    fit: BoxFit.fill,
+            SizedBox(height: mobileDeviceHeight * 0.03),
+            Container(
+              width: mobileDeviceWidth * 0.87,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5), // Shadow color
+                    spreadRadius: -4, // Spread radius
+                    blurRadius: 8, // Blur radius
+                    offset: const Offset(0, 1), // Offset
                   ),
-                ),
+                ],
               ),
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextFormField(
+                style: const TextStyle(fontSize: 14),
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  prefixIcon: Icon(Icons.email),
-                  border: OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(8),
+                    labelText: 'Enter email',
+                    labelStyle: const TextStyle(fontSize: 14),
+                    prefixIcon: const Icon(Icons.email),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none),
+                    filled: true,
+                    fillColor: Colors.white),
               ),
             ),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+            Container(
+              width: mobileDeviceWidth * 0.87,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5), // Shadow color
+                    spreadRadius: -4, // Spread radius
+                    blurRadius: 8, // Blur radius
+                    offset: const Offset(0, 1), // Offset
+                  ),
+                ],
+              ),
               child: TextFormField(
+                style: const TextStyle(fontSize: 14),
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  prefixIcon: Icon(Icons.lock),
-                  border: OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(
+                    labelText: 'Password',
+                    contentPadding: const EdgeInsets.all(8),
+                    labelStyle: const TextStyle(fontSize: 14),
+                    prefixIcon: const Icon(Icons.lock),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none),
+                    filled: true,
+                    fillColor: Colors.white),
               ),
             ),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+            Container(
+              width: mobileDeviceWidth * 0.87,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5), // Shadow color
+                    spreadRadius: -4, // Spread radius
+                    blurRadius: 8, // Blur radius
+                    offset: const Offset(0, 1), // Offset
+                  ),
+                ],
+              ),
               child: TextFormField(
+                style: const TextStyle(fontSize: 14),
                 controller: _confirmPasswordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Confirm Password',
-                  prefixIcon: Icon(Icons.lock),
-                  border: OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(
+                    labelText: 'Confirm password',
+                    contentPadding: const EdgeInsets.all(8),
+                    labelStyle: const TextStyle(fontSize: 14),
+                    prefixIcon: const Icon(Icons.lock),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none),
+                    filled: true,
+                    fillColor: Colors.white),
               ),
             ),
             const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _signup,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    backgroundColor: const Color.fromARGB(255, 50, 150, 113),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+            Container(
+              width: mobileDeviceWidth * 0.87,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5), // Shadow color
+                    spreadRadius: -4, // Spread radius
+                    blurRadius: 8, // Blur radius
+                    offset: const Offset(0, 1), // Offset
                   ),
-                  child: const Text('Sign Up',
-                      style: TextStyle(fontSize: 18, fontFamily: 'DM Sans')),
+                ],
+              ),
+              child: ElevatedButton(
+                onPressed: _signup,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  backgroundColor: const Color.fromARGB(255, 50, 150, 113),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
+                child: const Text('Sign up',
+                    style:
+                        TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
               ),
             ),
             const SizedBox(height: 10),
@@ -286,25 +339,53 @@ class _SignupPageState extends State<SignupPage> {
                     MaterialPageRoute(builder: (context) => const SignInPage()),
                   );
                 },
-                child: const Text('Already have an account? Login',
-                    style: TextStyle(fontSize: 14, fontFamily: 'DM Sans')),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Already have an account? ',
+                        style: TextStyle(fontSize: 13, color: grey)),
+                    Text(
+                      'Login',
+                      style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                          color: grey),
+                    )
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 50),
-            Flexible(
-              flex: 1,
-              child: GestureDetector(
-                onTap: () {
-                  _showEmailSnackbar('Email: nreach@gmail.com');
-                },
-                child: const Text('Having trouble? Contact us',
-                    style: TextStyle(fontSize: 12, fontFamily: 'DM Sans')),
-              ),
-            ),
-            const SizedBox(height: 20),
           ],
         ),
-      ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: GestureDetector(
+              onTap: () {
+                _showEmailSnackbar('Email: nreach@gmail.com');
+              },
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Trouble signing in? ',
+                      style: TextStyle(fontSize: 13, color: grey)),
+                  Text(
+                    'Contact us',
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.underline,
+                        color: Colors.black),
+                  )
+                ],
+              ),
+            ),
+          ),
+        )
+      ]),
     );
   }
 }
