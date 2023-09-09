@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:n_reach_nsbm/view/signin_page.dart';
 
+import 'constants/constants.dart';
 import 'otp_page.dart';
+import 'signinpage.dart';
 
 class PhoneNumberInputScreen extends StatelessWidget {
   final TextEditingController _phoneNumberController = TextEditingController();
@@ -103,102 +104,168 @@ class PhoneNumberInputScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 60),
-            IconButton(
-              onPressed: () {
-                // Navigate back when the button is pressed
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back),
+      //backgroundColor: Colors.white,
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.transparent,
+      ),
+      extendBodyBehindAppBar: true,
+      body: Stack(children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            height: mobileDeviceWidth * 0.43,
+            width: mobileDeviceWidth,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/circle3.png'), fit: BoxFit.fill),
             ),
-            const SizedBox(height: 70),
-            Flexible(
-              flex: 3,
-              child: Row(
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 200,
+                    //width: mobileDeviceWidth * 0.5,
+                    height: mobileDeviceHeight * 0.09,
                     child: Image.asset('assets/nsbmlogo.png'),
                   ),
+                  const SizedBox(
+                    width: 5,
+                  ),
                   SizedBox(
-                    width: 100,
+                    //width: mobileDeviceWidth * 0.5,
+                    height: mobileDeviceHeight * 0.08,
                     child: Image.asset('assets/nreach.png'),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Welcome to NReach, NSBM’s first mobile application. Explore our app as a guest user and enjoy access to some of our exciting features.',
-              style: TextStyle(fontFamily: 'DM Sans', fontSize: 12),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 60),
-            const Text(
-              'To get started, enter your mobile number',
-              style: TextStyle(fontFamily: 'DM Sans', fontSize: 12),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              controller: _phoneNumberController,
-              keyboardType: TextInputType.phone,
-              decoration: const InputDecoration(
-                labelText: 'Enter Phone Number',
-                prefixIcon: Icon(Icons.phone),
-                border: OutlineInputBorder(),
+              SizedBox(height: mobileDeviceHeight * 0.036),
+              const Text(
+                'Welcome to NReach, NSBM’s first mobile application.\nExplore our app as a guest user and enjoy access to some of our exciting features.',
+                style: TextStyle(fontFamily: 'DM Sans', fontSize: 12),
+                textAlign: TextAlign.center,
               ),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => _sendOtp(context),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: const Color.fromARGB(255, 50, 150, 113),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+              SizedBox(height: mobileDeviceHeight * 0.1),
+              const Text(
+                'To get started, enter your mobile number',
+                style: TextStyle(fontFamily: 'DM Sans', fontSize: 12),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                width: mobileDeviceWidth * 0.87,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5), // Shadow color
+                      spreadRadius: -4, // Spread radius
+                      blurRadius: 8, // Blur radius
+                      offset: const Offset(0, 1), // Offset
+                    ),
+                  ],
                 ),
-                child: const Text('Receive an OTP',
-                    style: TextStyle(fontFamily: 'DM Sans', fontSize: 14)),
+                child: TextField(
+                  controller: _phoneNumberController,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.all(8),
+                      labelStyle: const TextStyle(fontSize: 14),
+                      labelText: 'ex:- 0771234567',
+                      prefixIcon: const Icon(Icons.phone),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none),
+                      filled: true,
+                      fillColor: Colors.white),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignInPage()),
-                );
-              },
-              child: const Center(
-                child: Text('Already a registered User? Click here',
-                    style: TextStyle(fontSize: 12, fontFamily: 'DM Sans')),
+              const SizedBox(height: 20),
+              Container(
+                width: mobileDeviceWidth * 0.87,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5), // Shadow color
+                      spreadRadius: -4, // Spread radius
+                      blurRadius: 8, // Blur radius
+                      offset: const Offset(0, 1), // Offset
+                    ),
+                  ],
+                ),
+                child: ElevatedButton(
+                  onPressed: () => _sendOtp(context),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: const Color.fromARGB(255, 50, 150, 113),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text('Recieve an OTP',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+                ),
               ),
-            ),
-            const Spacer(),
-            const Spacer(),
-            GestureDetector(
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignInPage()),
+                  );
+                },
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Already a registered user? ',
+                        style: TextStyle(fontSize: 13, color: grey)),
+                    Text(
+                      'Login',
+                      style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                          color: grey),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: GestureDetector(
               onTap: () {
                 _showEmailSnackbar('Email: nreach@gmail.com', context);
               },
-              child: const Center(
-                child: Text('Having trouble? Contact us',
-                    style: TextStyle(fontSize: 12, fontFamily: 'DM Sans')),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Trouble signing in? ',
+                      style: TextStyle(fontSize: 13, color: Colors.grey)),
+                  Text(
+                    'Contact us',
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.underline,
+                        color: Colors.black),
+                  )
+                ],
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        )
+      ]),
     );
   }
 }
