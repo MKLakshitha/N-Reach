@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:n_reach_nsbm/pages/nroad_page.dart';
-import 'package:n_reach_nsbm/view/signin_page.dart';
+import 'package:simple_flutter_app/pages/home_page.dart';
+
+import 'constants/constants.dart';
+import 'signinpage.dart';
 
 class OtpScreen extends StatefulWidget {
   final String phoneNumber;
@@ -21,7 +23,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   void _navigateToHome(BuildContext context) {
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => const MapPage()));
+        MaterialPageRoute(builder: (BuildContext context) => const HomePage()));
   }
 
   void _showEmailSnackbar(String message, BuildContext context) {
@@ -103,40 +105,46 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Center(
+      //backgroundColor: Colors.white,
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
+      extendBodyBehindAppBar: true,
+      body: Stack(children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            height: mobileDeviceWidth * 0.43,
+            width: mobileDeviceWidth,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/circle3.png'), fit: BoxFit.fill),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 60),
-              IconButton(
-                onPressed: () {
-                  // Navigate back when the button is pressed
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: mobileDeviceHeight * 0.09,
+                    child: Image.asset('assets/nsbmlogo.png'),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  SizedBox(
+                    height: mobileDeviceHeight * 0.08,
+                    child: Image.asset('assets/nreach.png'),
+                  ),
+                ],
               ),
-              const SizedBox(height: 70),
-              Flexible(
-                flex: 3,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 200,
-                      child: Image.asset('assets/nsbmlogo.png'),
-                    ),
-                    SizedBox(
-                      width: 100,
-                      child: Image.asset('assets/nreach.png'),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
+              SizedBox(height: mobileDeviceHeight * 0.036),
               const Text(
                 'Welcome to NReach, NSBM’s first mobile application. Explore our app as a guest user and enjoy access to some of our exciting features.',
                 style: TextStyle(fontFamily: 'DM Sans', fontSize: 12),
@@ -146,15 +154,31 @@ class _OtpScreenState extends State<OtpScreen> {
               Text('Enter the OTP sent to ${widget.phoneNumber}',
                   style: const TextStyle(fontFamily: 'DM Sans', fontSize: 12)),
               const SizedBox(height: 10),
-              Center(
+              Container(
+                width: mobileDeviceWidth * 0.87,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5), // Shadow color
+                      spreadRadius: -4, // Spread radius
+                      blurRadius: 8, // Blur radius
+                      offset: const Offset(0, 1), // Offset
+                    ),
+                  ],
+                ),
                 child: TextField(
                   controller: _otpController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Enter OTP Number ',
-                    prefixIcon: Icon(Icons.phone),
-                    border: OutlineInputBorder(),
-                  ),
+                  decoration: InputDecoration(
+                      labelText: 'Enter OTP Number ',
+                      labelStyle: const TextStyle(fontSize: 14),
+                      contentPadding: const EdgeInsets.all(8),
+                      prefixIcon: const Icon(Icons.phone),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none),
+                      filled: true,
+                      fillColor: Colors.white),
                 ),
               ),
               const SizedBox(height: 20),
@@ -186,8 +210,6 @@ class _OtpScreenState extends State<OtpScreen> {
                       style: TextStyle(fontSize: 12, fontFamily: 'DM Sans')),
                 ),
               ),
-              const Spacer(),
-              const Spacer(),
               GestureDetector(
                 onTap: () {
                   _showEmailSnackbar('Email: nreach@gmail.com', context);
@@ -200,7 +222,7 @@ class _OtpScreenState extends State<OtpScreen> {
             ],
           ),
         ),
-      ),
+      ]),
     );
   }
 }
