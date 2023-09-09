@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:n_reach_nsbm/app_styles.dart';
-import 'package:n_reach_nsbm/model/onboard_data.dart';
-import 'package:n_reach_nsbm/size_config.dart';
-import 'package:n_reach_nsbm/view/signup_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'constants/constants.dart';
+import 'onboarddata.dart';
+import 'size_config.dart';
 
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
@@ -19,10 +19,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     return AnimatedContainer(
       margin: const EdgeInsets.only(right: 5),
       duration: const Duration(microseconds: 400),
-      height: 12,
-      width: 12,
+      height: 8,
+      width: 8,
       decoration: BoxDecoration(
-        color: currentPage == index ? kThemeColor : kSecondaryColor,
+        color: currentPage == index ? buttonColor : grey,
         shape: BoxShape.circle,
       ),
     );
@@ -36,106 +36,135 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    double sizeH = SizeConfig.blockSizeH!;
-    double sizeV = SizeConfig.blockSizeV!;
     return Scaffold(
       //initialize Size Config
       backgroundColor: Colors.white,
       body: SafeArea(
-          child: Column(
-        children: [
-          Expanded(
-              flex: 9,
-              child: PageView.builder(
-                  controller: _pageController,
-                  onPageChanged: (value) {
-                    setState(() {
-                      currentPage = value;
-                    });
-                  },
-                  itemCount: OnBoardingContents.length,
-                  itemBuilder: (context, index) => Column(
-                        children: [
-                          SizedBox(
-                            height: sizeV * 7,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              OnBoardingContents[index].title,
-                              style: kTitle,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          SizedBox(
-                            height: sizeV * 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              height: sizeV * 60,
-                              child: Image.asset(
-                                OnBoardingContents[index].image,
-                                fit: BoxFit.contain,
+          child: Container(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Expanded(
+                flex: 7,
+                child: PageView.builder(
+                    controller: _pageController,
+                    onPageChanged: (value) {
+                      setState(() {
+                        currentPage = value;
+                      });
+                    },
+                    itemCount: OnBoardingContents.length,
+                    itemBuilder: (context, index) => Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(28.0),
+                              child: SizedBox(
+                                height: 200,
+                                child: Image.asset(
+                                  OnBoardingContents[index].image,
+                                  fit: BoxFit.contain,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: sizeV * 9,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text(
-                              OnBoardingContents[index].description,
-                              style: kBodyText,
-                              textAlign: TextAlign.center,
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                OnBoardingContents[index].title,
+                                style: const TextStyle(
+                                    fontSize: 25, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                          )
-                        ],
-                      ))),
-          Expanded(
-            flex: 1,
-            child: Column(
-              children: [
-                currentPage == OnBoardingContents.length - 1
-                    ? GetStartedBtn(
-                        buttonName: 'Get Started',
-                        onPressed: () async {
-                          await _markOnboardingSeen();
-                          Navigator.pushReplacementNamed(context, '/signup');
-                        },
-                        bgColor: kThemeColor,
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          OnBoardNavBtn(
-                            name: 'Skip',
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SignupPage()));
+                            Text(
+                              OnBoardingContents[index].description,
+                              style: const TextStyle(fontSize: 13),
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ))),
+            Expanded(
+              flex: 1,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(OnBoardingContents.length,
+                          (index) => dotIndicator(index)),
+                    ),
+                  ),
+                  currentPage == OnBoardingContents.length - 1
+                      ? Container(
+                          width: mobileDeviceWidth * 0.87,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey
+                                    .withOpacity(0.5), // Shadow color
+                                spreadRadius: -4, // Spread radius
+                                blurRadius: 8, // Blur radius
+                                offset: const Offset(0, 1), // Offset
+                              ),
+                            ],
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await _markOnboardingSeen();
+                              Navigator.pushReplacementNamed(
+                                  context, '/signup');
                             },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 50, 150, 113),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: const Text('Get Started',
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w600)),
                           ),
-                          Row(
-                            children: List.generate(OnBoardingContents.length,
-                                (index) => dotIndicator(index)),
+                        )
+                      : Container(
+                          width: mobileDeviceWidth * 0.87,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey
+                                    .withOpacity(0.5), // Shadow color
+                                spreadRadius: -4, // Spread radius
+                                blurRadius: 8, // Blur radius
+                                offset: const Offset(0, 1), // Offset
+                              ),
+                            ],
                           ),
-                          OnBoardNavBtn(
-                              name: 'Next',
-                              onPressed: () {
-                                _pageController.nextPage(
-                                    duration: const Duration(microseconds: 400),
-                                    curve: Curves.easeInOut);
-                              })
-                        ],
-                      ),
-              ],
+                          child: ElevatedButton(
+                            onPressed: () {
+                              _pageController.nextPage(
+                                  duration: const Duration(microseconds: 400),
+                                  curve: Curves.easeInOut);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 50, 150, 113),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: const Text('Next',
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.w600)),
+                          ),
+                        ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       )),
     );
   }
@@ -184,12 +213,12 @@ class OnBoardNavBtn extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       borderRadius: BorderRadius.circular(6),
-      splashColor: Colors.green,
+      splashColor: buttonColor,
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Text(
           name,
-          style: kBodyText,
+          style: const TextStyle(fontSize: 12),
         ),
       ),
     );
