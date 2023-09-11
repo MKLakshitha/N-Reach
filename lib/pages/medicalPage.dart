@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:n_reach_nsbm/pages/btmnavbar.dart';
-import 'package:n_reach_nsbm/pages/sidebar.dart';
+import 'package:intl/intl.dart';
+import 'package:simple_flutter_app/constants/constants.dart';
+import 'package:simple_flutter_app/pages/btmnavbar.dart';
+import 'package:simple_flutter_app/pages/sidebar.dart';
 
 class Medical extends StatefulWidget {
   const Medical({Key? key}) : super(key: key);
@@ -10,10 +14,40 @@ class Medical extends StatefulWidget {
 }
 
 class _MedicalState extends State<Medical> {
-  void _onItemTapped(int index) {}
-  final List<String> _items = ['Apple', 'Banana', 'Orange', 'Pear'];
-  final String _selectedValue = '';
-  final TextEditingController _textEditingController = TextEditingController();
+  int currentindex = 2;
+  String studentid = '';
+  // Date and time variables
+  DateTime selectedDate = DateTime.now();
+  TimeOfDay selectedTime = TimeOfDay.now();
+
+  // Text editing controller for medical history
+  TextEditingController medicalHistoryController = TextEditingController();
+  TextEditingController dateTimeController = TextEditingController();
+  DateTime selectedtime = DateTime.now();
+
+  void _onItemTapped(int index) {
+    currentindex = index;
+  }
+
+  String? selectedMedicalReason;
+  final List<String> medicalReasons = [
+    'General checkup',
+    'Common Fever and flu',
+    'Cough and Sore throat',
+    'Dental and oral',
+    'Eye care',
+    'Allergies',
+    'Skin conditions',
+    'Chronic conditions',
+    'Pain and inflammation',
+    'Mental health',
+    'Infections',
+    'Injuries',
+    "Men's health",
+    "Women's health",
+    'Pregnancy and Prenatal Care',
+    'Other'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +56,13 @@ class _MedicalState extends State<Medical> {
 
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-            'Medical Appointment',
-            style: TextStyle(color: primaryColor),
-          ),
-          titleSpacing: 1.0,
-          automaticallyImplyLeading: true,
-          backgroundColor: white,
-          iconTheme: const IconThemeData(
-            color: Colors.black, // Change the color of the leading icon here
-          ),
-          elevation: 0),
+        title: const Text(
+          'Medical Appointment',
+          style: TextStyle(color: primaryColor),
+        ),
+        titleSpacing: 1.0,
+        automaticallyImplyLeading: true,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -104,28 +134,50 @@ class _MedicalState extends State<Medical> {
                     ),
                     child: Column(
                       children: [
-                        const TextField(
-                          decoration: InputDecoration(
-                              labelText: 'Medical illness/reason: '),
+                        DropdownButtonFormField<String>(
+                          value: selectedMedicalReason,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedMedicalReason = newValue;
+                            });
+                          },
+                          items: medicalReasons.map((String reason) {
+                            return DropdownMenuItem<String>(
+                              value: reason,
+                              child: Text(reason),
+                            );
+                          }).toList(),
+                          decoration: const InputDecoration(
+                            labelText: 'Medical illness/reason:',
+                            labelStyle: TextStyle(fontSize: 14),
+                            contentPadding: EdgeInsets.all(0),
+                          ),
                         ),
-                        const TextField(
-                          decoration: InputDecoration(
-                              labelText: 'Date of appointment: '),
+                        TextFormField(
+                          controller: dateTimeController,
+                          decoration: const InputDecoration(
+                            labelText: 'Select Date and Time',
+                            labelStyle: TextStyle(fontSize: 14),
+                          ),
+                          readOnly: true, // Make the input field read-only
+                          onTap: () {
+                            _selectDateAndTime(context);
+                          },
                         ),
-                        const TextField(
-                          decoration: InputDecoration(
-                              labelText: 'Preferred time slot: '),
+                        TextFormField(
+                          controller: medicalHistoryController,
+                          decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.all(0),
+                              labelText: 'Any other medical notes',
+                              labelStyle: TextStyle(fontSize: 14)),
                         ),
-                        const TextField(
-                          decoration:
-                              InputDecoration(labelText: 'Medical history: '),
-                        ),
-                        SizedBox(
-                          height: width * 0.019,
+                        const SizedBox(
+                          height: 8.0,
                         ),
                         const Text(
-                            'Note - You will be contacted by the medical centre for the available time slot and confirmation of the appointment. ',
-                            textAlign: TextAlign.center)
+                          'Note - You will be contacted by the medical centre for the available time slot and confirmation of the appointment.',
+                          textAlign: TextAlign.justify,
+                        )
                       ],
                     ),
                   ),
@@ -136,11 +188,12 @@ class _MedicalState extends State<Medical> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        //width:
         onPressed: () {
-          print('Floating action button pressed');
+          _bookappointment();
+          medicalHistoryController.clear();
+          dateTimeController.clear();
         },
-        icon: const Icon(Icons.add_box_rounded),
+        icon: const Icon(Icons.add_circle_outline_sharp),
         label: const Text(
           'Book Now',
           style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'DM Sans'),
@@ -148,22 +201,102 @@ class _MedicalState extends State<Medical> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        backgroundColor: Colors.green,
+        backgroundColor: buttonColor,
       ),
       bottomNavigationBar: BtmNavBar(
-        currentIndex: 2,
+        currentIndex: currentindex,
         onItemSelected: _onItemTapped,
       ),
     );
   }
 
-  BoxShadow shadowcard() {
-    return BoxShadow(
-      color:
-          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.25), // Shadow color
-      spreadRadius: -1, // How much the shadow should spread
-      blurRadius: 6, // How blurry the shadow should be
-      offset: const Offset(0, 4), // Offset from the container
+  Future<void> _selectDateAndTime(context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
     );
+
+    if (pickedDate != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: selectedTime,
+      );
+
+      if (pickedTime != null) {
+        setState(() {
+          selectedDate = DateTime(
+            pickedDate.year,
+            pickedDate.month,
+            pickedDate.day,
+            pickedTime.hour,
+            pickedTime.minute,
+          );
+
+          // Format the selected date and time as desired (e.g., 'yyyy-MM-dd hh:mm a')
+          String formattedDateTime =
+              DateFormat('yyyy-MM-dd hh:mm a').format(selectedDate);
+          selectedtime = selectedDate;
+          dateTimeController.text = formattedDateTime;
+        });
+      }
+    }
+  }
+
+  Future<void> fetchUserData() async {
+    try {
+      // Get the current user's UID from Firebase Auth
+      final User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        // Use the UID to query the Firestore collection for user details
+        final userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+
+        // Check if the document exists and contains the batch and faculty fields
+        if (userDoc.exists) {
+          studentid = userDoc['UMIS_ID'] ?? '';
+          setState(() {});
+        }
+      }
+    } catch (e) {
+      print('Error fetching user data: $e');
+    }
+  }
+
+  void _bookappointment() {
+    if (selectedMedicalReason == null || selectedtime == DateTime.now()) {
+      print('no data');
+    } else {
+      if (FirebaseAuth.instance.currentUser != null) {
+        // Create a reference to the "appointments" collection
+        final appointmentCollection =
+            FirebaseFirestore.instance.collection('medical_appointments');
+        fetchUserData();
+        // Prepare the data to be added
+        final appointmentData = {
+          'userId': studentid, // Store the user's ID for reference
+          'medicalReason': selectedMedicalReason,
+          'selectedTime': selectedtime,
+          'medicalNotes': medicalHistoryController.text,
+        };
+
+        // Add the appointment data to the collection
+        appointmentCollection.add(appointmentData).then((appointmentDoc) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Appointment booked successfully!'),
+              duration: Duration(seconds: 3), // Adjust the duration as needed
+            ),
+          );
+          // You can add any further actions or navigation here if needed.
+        }).catchError((error) {
+          print('Error adding appointment: $error');
+        });
+      }
+    }
   }
 }
