@@ -11,6 +11,6 @@ Team- <br>
 <br>Payment gateway ongoing</br>
    N - Wallet and N - Map Done
    N-Map and N-Blog finished
-<br> update please <br>
-<br>Lib Files added <br>
-<b> access permission underway</br>
+<br> update please </br>
+<br>Lib Files added </br>
+<br> access permission underway</br>
