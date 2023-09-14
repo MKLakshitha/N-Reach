@@ -4,7 +4,7 @@ Team- <br>
 2. M.K Lakshitha<br>
 3. AKGU Priyamanthi
 4. WTK Wijegunawardana <br>
-5. RPKH Rajapaksha <br>
+5. RPKH Rajapaksha 
 6. MSM Arshad<br>
 <br>Guys First Phase is Almost Done</br>
 <br> Updating---- </br><br>
@@ -12,8 +12,7 @@ Team- <br>
    N - Wallet and N - Map Done
    N-Map and N-Blog finished
 <br> update please </br>
-<br>Lib Files added </br>
+<br>Lib Files added </br> <br>
 <br> access permission underway</br>
 <br>We need to finish this by tomrrow</br>
-</br>
 </br>
