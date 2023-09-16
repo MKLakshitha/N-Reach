@@ -6,7 +6,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:simple_flutter_app/pages/home_page.dart';
 
 import '../constants/constants.dart';
 
@@ -72,7 +71,7 @@ class _BlogPageState extends State<BlogPage> {
       Map<String, dynamic> tweetData = {
         'text': tweetController.text,
         'timestamp': timestamp,
-        'author': currentUserDisplayName,
+        'author': currentUserDisplayName?.replaceAll(' ', '_'),
         'image_url': "",
       };
 
@@ -110,8 +109,7 @@ class _BlogPageState extends State<BlogPage> {
           icon: const Icon(Icons
               .arrow_back_ios_new_rounded), // Replace with your desired leading icon
           onPressed: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const HomePage()));
+            Navigator.pushNamed(context, '/home');
           },
         ),
         title: const Row(
@@ -199,6 +197,7 @@ class _BlogPageState extends State<BlogPage> {
                       final tweet = tweets[index];
                       final tweetText = tweet['text'];
                       final tweetAuthor = tweet['author'];
+                      final tweetdate = tweet['timestamp'];
                       final tweetId = tweet.id;
 
                       return TweetWidget(
@@ -206,6 +205,7 @@ class _BlogPageState extends State<BlogPage> {
                         tweetAuthor: tweetAuthor,
                         tweetId: tweetId,
                         imageUrl: tweet['image_url'],
+                        date: tweetdate,
                       );
                     },
                   );
@@ -312,6 +312,7 @@ class TweetWidget extends StatefulWidget {
   final String tweetAuthor;
   final String tweetId;
   final String imageUrl;
+  final Timestamp date;
 
   const TweetWidget({
     Key? key,
@@ -319,6 +320,7 @@ class TweetWidget extends StatefulWidget {
     required this.tweetAuthor,
     required this.tweetId,
     required this.imageUrl,
+    required this.date,
   }) : super(key: key);
 
   @override
@@ -501,11 +503,8 @@ class _TweetWidgetState extends State<TweetWidget> {
                     ),
                   ],
                   Text(
-                    DateFormat('yyyy-MM-dd hh:mm:ss a')
-                        .format(DateTime.now().toLocal()),
-                    style: const TextStyle(
-                      color: Colors.grey,
-                    ),
+                    'blogged ${formatTimestamp(widget.date)}',
+                    style: const TextStyle(color: Colors.grey, fontSize: 12),
                   ),
                   SizedBox(
                     height: mobileDeviceHeight * 0.0098,
@@ -545,5 +544,26 @@ class _TweetWidgetState extends State<TweetWidget> {
         Text('$likeCount'),
       ],
     );
+  }
+}
+
+String formatTimestamp(Timestamp timestamp) {
+  final now = DateTime.now();
+  final dateTime = timestamp.toDate();
+  final diff = now.difference(dateTime);
+
+  if (diff.inSeconds < 20) {
+    return 'just now';
+  } else if (diff.inSeconds < 60) {
+    final seconds = diff.inSeconds;
+    return '${seconds}s ago';
+  } else if (diff.inMinutes < 60) {
+    final minutes = diff.inMinutes;
+    return '$minutes min${minutes != 1 ? 's' : ''} ago';
+  } else if (diff.inHours < 24) {
+    final hours = diff.inHours;
+    return '$hours hour${hours != 1 ? 's' : ''} ago';
+  } else {
+    return DateFormat('dd MMM yyyy hh:mm a').format(dateTime);
   }
 }
