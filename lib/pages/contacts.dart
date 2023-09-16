@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:../constants/constants.dart';
-import 'btmnavbar.dart';
+import 'package:simple_flutter_app/constants/constants.dart';
+import 'package:simple_flutter_app/pages/btmnavbar.dart';
 
 class Contacts extends StatefulWidget {
   const Contacts({super.key});
@@ -61,6 +61,8 @@ class _ContactsState extends State<Contacts> {
                           title = "Faculty of Engineering";
                         case ('it'):
                           title = "IT department";
+                        case ('fos'):
+                          title = "Faculty of Science";
                         default:
                           title = category;
                       }
@@ -88,21 +90,17 @@ class _ContactsState extends State<Contacts> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text("${contact.name} ",
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                          style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w400)),
-                                      Text('(${contact.position})',
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                          style: const TextStyle(
-                                              fontSize: 14, color: grey)),
-                                    ],
-                                  ),
+                                  Text("${contact.name} ",
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400)),
+                                  Text('(${contact.position})',
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: const TextStyle(
+                                          fontSize: 14, color: grey)),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
