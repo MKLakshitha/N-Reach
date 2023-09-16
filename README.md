@@ -2,9 +2,9 @@
 Team- <br>
 1. T Praveen<br>
 2. M.K Lakshitha<br>
-3. AKGU Priyamanthi
+3. AKGU Priyamanthi <br>
 4. WTK Wijegunawardana <br>
-5. RPKH Rajapaksha 
+5. RPKH Rajapaksha <br>
 6. MSM Arshad<br>
 <br>Guys First Phase is Almost Done</br>
 <br> Updating---- </br><br>
@@ -14,6 +14,6 @@ Team- <br>
 <br> update please </br>
 <br>Lib Files added </br> <br>
 <br> access permission underway</br>
-<br>We need to finish this by tomrrow</br>
+<br>We need to finish this by tomorrow</br>
 <notifications>
 </br>
