@@ -1,21 +1,25 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'constants.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     checkOnboardingStatus();
+    /*Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(context, '/home'); // Navigate to HomePage
+    });*/
   }
 
   Future<void> checkOnboardingStatus() async {
@@ -28,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
         }
       });
     } else {
-      Future.delayed(const Duration(seconds: 3)).then((value) {
+      Future.delayed(const Duration(seconds: 4)).then((value) {
         if (mounted) {
           Navigator.pushReplacementNamed(context, '/onboarding');
         }
@@ -39,63 +43,36 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Expanded(
-            flex: 7,
-            child: SizedBox(
-              width: double.infinity,
-              child: SizedBox(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(
-                      image: AssetImage('assets/nreach.png'),
-                      width: 200,
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    SpinKitWave(
-                      color: Color.fromARGB(255, 6, 145, 77),
-                      size: 30.0,
-                    ),
-                  ],
-                ),
-              ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Spacer(),
+            Image.asset(
+              'assets/nreach.png',
+              height: 80,
             ),
-          ),
-          Expanded(
-            flex: 1,
-            child: SizedBox(
-              width: double.infinity,
-              child: Column(
+            const SizedBox(height: 50),
+            const CupertinoActivityIndicator(),
+            const Spacer(),
+            const Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Powered By',
-                      style: GoogleFonts.dmSans(
-                        textStyle: Theme.of(context).textTheme.displayLarge,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                      )),
-                  Text('Team Dart Squad',
-                      style: GoogleFonts.dmSans(
-                        textStyle: Theme.of(context).textTheme.displayLarge,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      )),
-                  Text('Copyright © 2023 All right reserved.',
-                      style: GoogleFonts.dmSans(
-                        textStyle: Theme.of(context).textTheme.displayLarge,
-                        fontSize: 7,
-                        fontWeight: FontWeight.w700,
-                        fontStyle: FontStyle.italic,
-                      )),
+                  Text('Powered by ', style: TextStyle(color: Colors.grey)),
+                  Text(
+                    'Dart Squad',
+                    style: TextStyle(
+                      color: grey,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
