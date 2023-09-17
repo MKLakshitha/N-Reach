@@ -5,16 +5,16 @@ Team- <br>
 3. AKGU Priyamanthi <br>
 4. WTK Wijegunawardana <br>
 5. RPKH Rajapaksha <br>
-6. MSM Arshad<br>
+6. MSM Arshad<br><br>
 <br>Guys First Phase is Almost Done</br>
 <br> Updating---- </br><br>
 <br>Payment gateway ongoing</br>
    N - Wallet and N - Map Done
    N-Map and N-Blog finished
 <br> update please </br>
-<br>Lib Files added </br> <br>
+<br>Lib Files added </br>
 <br> access permission underway</br>
 <br>We need to finish this by tomorrow</br>
-<notifications>
+<notifications><br>
 </br>
 </br/>
