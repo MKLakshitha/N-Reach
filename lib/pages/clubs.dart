@@ -1,14 +1,16 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:popup_card/src/hero_route.dart';
+import 'package:simple_flutter_app/carousel.dart';
+import 'package:simple_flutter_app/constants/constants.dart';
+import 'package:simple_flutter_app/pages/btmnavbar.dart';
+import 'package:simple_flutter_app/pages/not_found.dart';
+import 'package:simple_flutter_app/pages/sidebar.dart';
 
-import '../components/constants.dart';
-import '../model/clubdata.dart';
-import 'btmnavbar.dart';
-import 'carousel.dart';
-import 'sidebar.dart';
+import '../clubdata.dart';
 
 class Clubs extends StatelessWidget {
   final String clubName;
@@ -28,7 +30,7 @@ class Clubs extends StatelessWidget {
                   child: SizedBox(
                 height: 100,
                 width: 100,
-                child: CircularProgressIndicator(),
+                child: CupertinoActivityIndicator(),
               )),
               //
             ); // Show a loading indicator while fetching data
@@ -75,10 +77,14 @@ class Clubs extends StatelessWidget {
                         club.abbreviation,
                         style: const TextStyle(color: Colors.black),
                       ),
-                      background: CachedNetworkImage(
-                        imageUrl: club.cover,
-                        fit: BoxFit.cover,
-                      ),
+                      background: club.cover.isNotEmpty
+                          ? CachedNetworkImage(
+                              imageUrl: club.cover,
+                              fit: BoxFit.cover,
+                            )
+                          : Container(
+                              color: const Color.fromARGB(255, 197, 197, 197),
+                            ),
                     ),
                     actions: [
                       TextButton(
@@ -140,11 +146,13 @@ class Clubs extends StatelessWidget {
                                 right: mobileDeviceWidth * 0.04,
                                 left: mobileDeviceWidth * 0.04,
                               ),
-                              child: Text(
-                                club.desc,
-                                style: const TextStyle(fontSize: 12),
-                                textAlign: TextAlign.center,
-                              )),
+                              child: club.desc.isNotEmpty
+                                  ? Text(
+                                      club.desc,
+                                      style: const TextStyle(fontSize: 12),
+                                      textAlign: TextAlign.center,
+                                    )
+                                  : const Text('')),
                           Padding(
                             padding: EdgeInsets.only(
                                 left: mobileDeviceWidth * 0.04,
@@ -155,7 +163,10 @@ class Clubs extends StatelessWidget {
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                           ),
-                          ImageScroll(imageUrl: images),
+                          (images.isNotEmpty)
+                              ? ImageScroll(imageUrl: images)
+                              : const Center(
+                                  child: Text('No images uploaded yet')),
                           Padding(
                             padding: EdgeInsets.only(
                                 top: mobileDeviceHeight * 0.025,
@@ -167,12 +178,32 @@ class Clubs extends StatelessWidget {
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                           ),
-                          const ImageCarousel(),
-                          Quotes(
-                              imgurls: topboardimages,
-                              topboard: topboard,
-                              quote: quotes),
-                          ContactBar(contact: contact),
+                          ImageCarousel(
+                            clubname: clubName,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: mobileDeviceHeight * 0.025,
+                                left: mobileDeviceWidth * 0.04,
+                                bottom: mobileDeviceHeight * 0.012),
+                            child: const Text(
+                              'Message from the Top Board',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                          ),
+                          (topboard.isNotEmpty)
+                              ? Quotes(
+                                  imgurls: topboardimages,
+                                  topboard: topboard,
+                                  quote: quotes)
+                              : const Center(
+                                  child:
+                                      Text("Club hasn't updated any data\n\n")),
+                          (topboard.isNotEmpty)
+                              ? ContactBar(contact: contact)
+                              : const Center(
+                                  child: Text("Club hasn't updated any data")),
                         ]),
                   ),
                 ],
@@ -181,7 +212,7 @@ class Clubs extends StatelessWidget {
                   BtmNavBar(currentIndex: 2, onItemSelected: onItemSelected),
             );
           }
-          return Notfound();
+          return const Notfound();
         });
   }
 
@@ -231,20 +262,6 @@ class ImageScroll extends StatelessWidget {
   }
 }
 
-class Notfound extends StatelessWidget {
-  const Notfound({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Data not found.',
-        style: TextStyle(fontSize: 16),
-      ),
-    );
-  }
-}
-
 class Quotes extends StatelessWidget {
   final List<String> imgurls, topboard, quote;
   const Quotes(
@@ -261,10 +278,6 @@ class Quotes extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Message from the Top Board',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
           SizedBox(height: mobileDeviceHeight * 0.015),
           Row(
             children: [
