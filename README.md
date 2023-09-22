@@ -9,13 +9,12 @@ Team- <br>
 <br>Guys First Phase is Almost Done</br>
 <br> Updating---- </br>
 <br>Payment gateway ongoing</br>
-   N - Wallet and N - Map Done
-   N-Map and N-Blog finished
+   <br>N - Wallet and N - Map Done
+   N-Map and N-Blog finished<br>
 <br> update please </br>
 <br>Lib Files added </br>
 <br> access permission underway</br>
 <br>We need to finish this by tomorrow</br>
 <guyssss>
 <notifications><br>
-<br>four more days</br>
 </br>
